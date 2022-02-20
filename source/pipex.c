@@ -20,11 +20,15 @@ int	open_outfile(char *file_name)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	fd[2];
+	int	fd_infile;
+	int	fd_outfile;
 	
 	if (argc == 5)
 	{
-		/* code */
+		fd_infile = open_infile(argv[1]);
+		fd_outfile = open_outfile(argv[4]);
+		dup2(fd_infile, 0);
+		dup2(fd_outfile, 1);
 	}
 	return (0);
 }
