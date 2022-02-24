@@ -22,16 +22,22 @@ int	open_outfile(char *file_name)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	fd[2];
+	int     fd[2];
+    pid_t   process_id;
 	
 	if (argc == 5)
 	{
         if (pipe(fd) != 0)
             error_exit();
-//		fd_infile = open_infile(argv[1]);
-//		fd_outfile = open_outfile(argv[4]);
-//		dup2(fd_infile, 0);
-//		dup2(fd_outfile, 1);
+        process_id = fork();
+        if (process_id == -1)
+            error_exit();
+        else if (process_id == 0)
+            child_processing(argv, envp, fd);
+        waitpid(process_id, NULL, 0);
+        parent_processing(argv, envp, fd);
 	}
+    else
+        ft_putendl_fd("Error! Must be 4 arguments.", 2);
 	return (0);
 }

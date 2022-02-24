@@ -8,5 +8,6 @@
 # include <stdlib.h>
 
 void    error_exit(void);
+void	ft_putendl_fd(char *s, int fd);
 
 #endif
