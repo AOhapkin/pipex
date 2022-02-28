@@ -7,8 +7,12 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+# define SPACE  ' '
+
 void    error_exit(void);
 void	ft_putendl_fd(char *s, int fd);
 char	**ft_split(char *string, char divider);
+int     open_infile(char *file_name);
+int     open_outfile(char *file_name);
 
 #endif

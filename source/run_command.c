@@ -18,7 +18,7 @@ void    run_command(char *argv, char **envp)
     {
         while (command[i])
         {
-            free(command[i])
+            free(command[i]);
             i++;
         }
         free(command);
