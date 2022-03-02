@@ -2,7 +2,8 @@
 
 char *find_command_path(char *command, char **envp)
 {
-
+    char    *full_path;
+    char    *temp;
 }
 
 void    run_command(char *argv, char **envp)

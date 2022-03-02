@@ -42,3 +42,4 @@ int	open_outfile(char *file_name)
     }
     return (open(file_name, O_CREAT | O_WRONLY | O_TRUNC));
 }
+
