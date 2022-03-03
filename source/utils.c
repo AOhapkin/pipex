@@ -101,3 +101,34 @@ int ft_strlen(const char *string)
     }
     return (len);
 }
+
+char    *ft_join_path_and_name(char *path, char *name)
+{
+    char    *result;
+    int     i;
+    int     j;
+
+    i = 0;
+    j = 0;
+    result = malloc(sizeof(char) * (ft_strlen(path) + ft_strlen(name)));
+    if (!result)
+        return (NULL);
+    while (path[j])
+    {
+        result[i] = path[j];
+        i++;
+        j++;
+    }
+    result[i] = '/';
+    i++;
+    j = 0;
+    while (name[j])
+    {
+        result[i] = name[j];
+        i++;
+        j++;
+    }
+    result[i] = '\0';
+    return (result);
+}
+
