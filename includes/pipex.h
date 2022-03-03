@@ -16,5 +16,6 @@ int     open_infile(char *file_name);
 int     open_outfile(char *file_name);
 int     ft_strncmp(const char *s1, const char *s2, size_t n);
 int     ft_len_to_char(char *string, char c);
+char    *ft_strndub(const char *string, unsigned int n);
 
 #endif

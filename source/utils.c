@@ -70,3 +70,21 @@ int ft_len_to_char(char *string, char c)
     else
         return (-1);
 }
+
+char    *ft_strndub(const char *string, unsigned int n)
+{
+    int     i;
+    char    *new_string;
+
+    new_string = malloc(sizeof(char) * (n + 1));
+    if (!new_string)
+        return (NULL);
+    i = 0;
+    while (i < n)
+    {
+        new_string[i] = string[i];
+        i++;
+    }
+    new_string[i] = '\0';
+    return (new_string);
+}
