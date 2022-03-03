@@ -14,5 +14,6 @@ void	ft_putendl_fd(char *s, int fd);
 char	**ft_split(char *string, char divider);
 int     open_infile(char *file_name);
 int     open_outfile(char *file_name);
+int     ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif
