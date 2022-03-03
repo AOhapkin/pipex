@@ -58,7 +58,7 @@ int ft_strncmp(const char *s1, const char *s2, size_t n)
     return (0);
 }
 
-int ft_len_to_char(char *string, char c)
+int ft_len_to_char(const char *string, char c)
 {
     int len;
 
@@ -87,4 +87,17 @@ char    *ft_strndub(const char *string, unsigned int n)
     }
     new_string[i] = '\0';
     return (new_string);
+}
+
+int ft_strlen(const char *string)
+{
+    int len;
+
+    len = 0;
+    while (*string)
+    {
+        len++;
+        string++;
+    }
+    return (len);
 }
