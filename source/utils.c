@@ -57,3 +57,16 @@ int ft_strncmp(const char *s1, const char *s2, size_t n)
     }
     return (0);
 }
+
+int ft_len_to_char(char *string, char c)
+{
+    int len;
+
+    len = 0;
+    while (string[len] && string[len] != c)
+        len++;
+    if (string[len] == c)
+        return (len);
+    else
+        return (-1);
+}
