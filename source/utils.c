@@ -1,9 +1,9 @@
 #include "pipex.h"
 
-void    error_exit(void)
+void    error_exit(char *error_message)
 {
-    perror("Program exit with error");
-    exit(EXIT_FAILURE);
+    perror(error_message);
+    exit(0);
 }
 
 void	ft_putchar_fd(char c, int fd)
@@ -102,33 +102,30 @@ int ft_strlen(const char *string)
     return (len);
 }
 
-char    *ft_join_path_and_name(char *path, char *name)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-    char    *result;
-    int     i;
-    int     j;
+    char	*dest;
+    int		dest_len;
+    int		i;
+    int		j;
 
+    if (!s1 || !s2)
+        return (NULL);
+    dest_len = ft_strlen(s1) + ft_strlen(s2) + 1;
+    dest = malloc(sizeof(char) * dest_len);
+    if (!dest)
+        return (NULL);
     i = 0;
     j = 0;
-    result = malloc(sizeof(char) * (ft_strlen(path) + ft_strlen(name)));
-    if (!result)
-        return (NULL);
-    while (path[j])
+    while (s1[i])
     {
-        result[i] = path[j];
+        dest[j] = s1[i];
         i++;
         j++;
     }
-    result[i] = '/';
-    i++;
-    j = 0;
-    while (name[j])
-    {
-        result[i] = name[j];
-        i++;
-        j++;
-    }
-    result[i] = '\0';
-    return (result);
+    i = 0;
+    while (s2[i])
+        dest[j++] = s2[i++];
+    dest[j] = '\0';
+    return (dest);
 }
-
