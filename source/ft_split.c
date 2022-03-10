@@ -40,7 +40,7 @@ char	**ft_split(char *string, char divider)
             j++;
         result[i] = str_n_copy(string, j);
         string = string + j + 1;
-        i++
+        i++;
     }
     return (result);
 }
