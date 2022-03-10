@@ -1,20 +1,17 @@
 NAME = pipex
 
 # dirs
-DIR_S = srcs/
 
 INCLUDES = ./includes
 
 # files
-C_FILES = 	pipex.c\
-            ft_split.c\
-            utils.c
+SRCS = 	source/pipex.c\
+            source/ft_split.c\
+            source/utils.c
 
 HEADER = $(INCLUDES)/pipex.h
 
-SRCS = $(addprefix $(DIR_S), $(C_FILES))
-
-OBJS = $(addprefix $(DIR_O), $(C_FILES:.c=.o))
+OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 FLAGS = -Wall -Werror -Wextra
@@ -27,7 +24,7 @@ $(NAME):	$(OBJS)
 			$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 
 %.o: 		%.c $(HEADER)
-			$(CC) $(FLAGS) -c $< -o $@
+			$(CC) $(FLAGS) -c $< -o $@ -I $(INCLUDES)
 
 clean:
 			rm -rf $(OBJS)
