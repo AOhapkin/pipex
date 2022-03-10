@@ -58,37 +58,6 @@ int ft_strncmp(const char *s1, const char *s2, size_t n)
     return (0);
 }
 
-int ft_len_to_char(const char *string, char c)
-{
-    int len;
-
-    len = 0;
-    while (string[len] && string[len] != c)
-        len++;
-    if (string[len] == c)
-        return (len);
-    else
-        return (-1);
-}
-
-char    *ft_strndub(const char *string, unsigned int n)
-{
-    int     i;
-    char    *new_string;
-
-    new_string = malloc(sizeof(char) * (n + 1));
-    if (!new_string)
-        return (NULL);
-    i = 0;
-    while (i < n)
-    {
-        new_string[i] = string[i];
-        i++;
-    }
-    new_string[i] = '\0';
-    return (new_string);
-}
-
 int ft_strlen(const char *string)
 {
     int len;
