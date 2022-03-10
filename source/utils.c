@@ -1,6 +1,6 @@
 #include "pipex.h"
 
-void    error_exit(char *error_message)
+void    ft_error_exit(char *error_message)
 {
     perror(error_message);
     exit(0);
@@ -23,7 +23,7 @@ void	ft_putendl_fd(char *s, int fd)
     ft_putchar_fd('\n', fd);
 }
 
-int	open_infile(char *file_name)
+int	ft_open_infile(char *file_name)
 {
     if (access(file_name, F_OK) < 0)
     {
@@ -33,7 +33,7 @@ int	open_infile(char *file_name)
     return (open(file_name, O_RDONLY));
 }
 
-int	open_outfile(char *file_name)
+int	ft_open_outfile(char *file_name)
 {
     if (access(file_name, F_OK) < 0)
     {

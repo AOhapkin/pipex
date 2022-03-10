@@ -52,18 +52,18 @@ void    run_command(char *argv, char **envp)
             i++;
         }
         free(command_w_flags);
-        error_exit("Command not found");
+        ft_error_exit("Command not found");
     }
     command_w_flags++;
     if (execve(path, command_w_flags, envp) == -1)
-        error_exit("Command error");
+        ft_error_exit("Command error");
 }
 
 void    run_child_process(char **argv, char **envp, int fd)
 {
     int     first_file;
 
-    first_file = open_infile(argv[1]);
+    first_file = ft_open_infile(argv[1]);
     dup2(fd, 1);
     dup2(first_file, 0);
     close(fd);
@@ -74,7 +74,7 @@ void    run_parent_process(char **argv, char **envp, int fd)
 {
     int second_file;
 
-    second_file = open_outfile(argv[4]);
+    second_file = ft_open_outfile(argv[4]);
     dup2(fd, 0);
     dup2(second_file, 1);
     close(fd);
