@@ -1,9 +1,20 @@
 #include "pipex.h"
 
+pid_t	ft_fork(void)
+{
+    pid_t	pid;
+
+    pid = fork();
+    if (pid < 0)
+        ft_error_exit("fork error");
+    return (pid);
+}
+
+
 void    ft_error_exit(char *error_message)
 {
     perror(error_message);
-    exit(0);
+    exit(1);
 }
 
 void	ft_putchar_fd(char c, int fd)

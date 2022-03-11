@@ -17,5 +17,6 @@ int     ft_strncmp(const char *s1, const char *s2, size_t n);
 int     ft_strlen(const char *string);
 char	*ft_strjoin(char const *s1, char const *s2);
 void    ft_error_exit(char *error_message);
+pid_t	ft_fork(void);
 
 #endif
