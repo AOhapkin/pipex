@@ -10,6 +10,15 @@ pid_t	ft_fork(void)
     return (pid);
 }
 
+int	ft_dup2(int old, int new)
+{
+    int	buf;
+
+    buf = dup2(old, new);
+    if (buf == -1)
+        ft_error_exit("dup2 error");
+    return (buf);
+}
 
 void    ft_error_exit(char *error_message)
 {

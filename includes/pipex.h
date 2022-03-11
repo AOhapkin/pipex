@@ -18,5 +18,6 @@ int     ft_strlen(const char *string);
 char	*ft_strjoin(char const *s1, char const *s2);
 void    ft_error_exit(char *error_message);
 pid_t	ft_fork(void);
+int     ft_dup2(int old, int new);
 
 #endif
