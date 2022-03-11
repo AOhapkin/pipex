@@ -35,28 +35,33 @@ char *get_command_path(char *comand, char **envp)
     return (0);
 }
 
-void    run_command(char *argv, char **envp)
+char    *get_command(char *command, char **envp)
 {
-    char	**command_w_flags;
-    char	*path;
-    int 	i;
+    char	**paths;
+    char	*temp;
+    char	*full_path;
+    int		i;
 
-    command_w_flags = ft_split(argv, SPACE);
-    path = get_command_path(command_w_flags[0], envp);
     i = 0;
-    if (!path)
+    while (ft_strncmp(envp[i], "PATH", 4) && envp[i] != NULL)
+        i++;
+    paths = ft_split(envp[i] + 5, ':');
+    i = 0;
+    while (paths[i] != NULL)
     {
-        while (command_w_flags[i])
+        temp = ft_strjoin(paths[i], "/");
+        full_path = ft_strjoin(temp, command);
+        free(temp);
+        if (!access(full_path, F_OK))
         {
-            free(command_w_flags[i]);
-            i++;
+            free(paths);
+            return (full_path);
         }
-        free(command_w_flags);
-        ft_error_exit("Command not found");
+        free(full_path);
+        i++;
     }
-    command_w_flags++;
-    if (execve(path, command_w_flags, envp) == -1)
-        ft_error_exit("Command error");
+    free(paths);
+    return (NULL);
 }
 
 void    run_child_process(char **argv, char **envp, int fd)
