@@ -84,26 +84,24 @@ void    run_parent_process(char **argv, char **envp, int fd)
 int	main(int argc, char **argv, char **envp)
 {
 	int     fd[2];
-    pid_t   process_id;
-	
+    pid_t   pid1;
+    pid_t   pid2;
+
 	if (argc == 5)
 	{
         if (pipe(fd) == -1)
-        {
-            ft_putendl_fd("pipe error\n", 2);
-            return (0);
-        }
-        process_id = fork();
-        if (process_id == -1)
-        {
-            ft_putendl_fd("fork error\n", 2);
-            return (0);
-        }
-        if (process_id == 0)
+            ft_error_exit("pipe error");
+        pid1 = ft_fork();
+        if (pid1 == 0)
             run_child_process(argv, envp, fd[0]);
-        waitpid(process_id, NULL, 0);
-        run_parent_process(argv, envp, fd[1]);
-	}
-    ft_putendl_fd("Error! Must be 4 arguments.\n", 2);
+        pid2 = ft_fork();
+        if (pid2 == 0)
+            run_parent_process(argv, envp, fd[1]);
+        close(fd[0]);
+        close(fd[1]);
+        waitpid(pid1, NULL, 0);
+        waitpid(pid2, NULL, 0);
+    }
+    ft_error_exit("Error! Must be 4 arguments");
 	return (0);
 }
