@@ -32,7 +32,7 @@ char    *ft_get_command(char *command, char **envp)
 void    run_child_process(char **argv, char **envp, int *fd)
 {
     int		infile;
-    char	**command_args;
+    char	**args_vector;
     char	*file_path;
 
     ft_dup2(fd[1], 1);
@@ -44,11 +44,11 @@ void    run_child_process(char **argv, char **envp, int *fd)
     if (infile == -1)
         ft_error_exit("can't open infile");
     ft_dup2(infile, 0);
-    command_args = ft_split(argv[2], ' ');
-    execve(ft_get_command(envp, command_args[0]), command_args, envp);
+    args_vector = ft_split(argv[2], ' ');
+    execve(ft_get_command(args_vector[0], envp), args_vector, envp);
 }
 
-void    run_parent_process(char **argv, char **envp, int fd)
+void    run_parent_process(char **argv, char **envp, int *fd)
 {
     int		outfile;
     char	**command_args;
@@ -64,7 +64,7 @@ void    run_parent_process(char **argv, char **envp, int fd)
     close(fd[1]);
     ft_dup2(outfile, 1);
     command_args = ft_split(argv[3], ' ');
-    execve(ft_get_command(envp, command_args[0]), command_args, envp);
+    execve(ft_get_command(command_args[0], envp), command_args, envp);
 }
 
 int	main(int argc, char **argv, char **envp)
