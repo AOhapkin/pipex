@@ -32,31 +32,39 @@ char    *ft_get_command(char *command, char **envp)
 void    run_child_process(char **argv, char **envp, int *fd)
 {
     int		infile;
-    char	**argVec1;
+    char	**command_args;
     char	*file_path;
 
     ft_dup2(fd[1], 1);
     close(fd[0]);
     close(fd[1]);
-    file_path = ft_get_file_path(envp, argv[1], 1);
+    file_path = ft_get_file_path(argv[1], 1, envp);
     infile = open(file_path, O_RDONLY);
     free(file_path);
     if (infile == -1)
         ft_error_exit("can't open infile");
     ft_dup2(infile, 0);
-    argVec1 = ft_split(argv[2], ' ');
-    execve(ft_get_command(envp, argVec1[0]), argVec1, envp);
+    command_args = ft_split(argv[2], ' ');
+    execve(ft_get_command(envp, command_args[0]), command_args, envp);
 }
 
 void    run_parent_process(char **argv, char **envp, int fd)
 {
-    int second_file;
+    int		outfile;
+    char	**command_args;
+    char	*file_path;
 
-    second_file = ft_open_outfile(argv[4]);
-    dup2(fd, 0);
-    dup2(second_file, 1);
-    close(fd);
-    run_command(argv[3], envp);
+    file_path = ft_get_file_path(argv[4], 0, envp);
+    outfile = open(file_path, O_CREAT | O_RDWR | O_TRUNC, 0644);
+    free(file_path);
+    if (outfile == -1)
+        ft_error_exit("can't open or create outfile");
+    ft_dup2(fd[0], 0);
+    close(fd[0]);
+    close(fd[1]);
+    ft_dup2(outfile, 1);
+    command_args = ft_split(argv[3], ' ');
+    execve(ft_get_command(envp, command_args[0]), command_args, envp);
 }
 
 int	main(int argc, char **argv, char **envp)
