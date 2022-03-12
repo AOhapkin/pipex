@@ -1,41 +1,6 @@
 #include "pipex.h"
 
-char *get_command_path(char *comand, char **envp)
-{
-    int     i;
-    char    **all_paths;
-    char    *temp;
-    char    *full_path;
-
-    i = 0;
-    while (ft_strncmp(envp[i], "PATH=", 5) == 0)
-        i++;
-    all_paths = ft_split((envp[i] + 5), ':');
-    i = 0;
-    while (all_paths[i])
-    {
-        temp = ft_strjoin(all_paths[i], "/");
-        full_path = ft_strjoin(temp, comand);
-        free(temp);
-        if (access(full_path, F_OK) == 0)
-        {
-            i = 0;
-            while (all_paths[i])
-                free(all_paths[i]);
-            free(all_paths);
-            return (full_path);
-        }
-        free(full_path);
-        i++;
-    }
-    i = -1;
-    while (all_paths[++i])
-        free(all_paths[i]);
-    free(all_paths);
-    return (0);
-}
-
-char    *get_command(char *command, char **envp)
+char    *ft_get_command(char *command, char **envp)
 {
     char	**paths;
     char	*temp;
@@ -64,15 +29,23 @@ char    *get_command(char *command, char **envp)
     return (NULL);
 }
 
-void    run_child_process(char **argv, char **envp, int fd)
+void    run_child_process(char **argv, char **envp, int *fd)
 {
-    int     first_file;
+    int		infile;
+    char	**argVec1;
+    char	*file_path;
 
-    first_file = ft_open_infile(argv[1]);
-    dup2(fd, 1);
-    dup2(first_file, 0);
-    close(fd);
-    run_command(argv[2], envp);
+    ft_dup2(fd[1], 1);
+    close(fd[0]);
+    close(fd[1]);
+    file_path = ft_get_file_path(envp, argv[1], 1);
+    infile = open(file_path, O_RDONLY);
+    free(file_path);
+    if (infile == -1)
+        ft_error_exit("can't open infile");
+    ft_dup2(infile, 0);
+    argVec1 = ft_split(argv[2], ' ');
+    execve(ft_get_command(envp, argVec1[0]), argVec1, envp);
 }
 
 void    run_parent_process(char **argv, char **envp, int fd)
@@ -98,10 +71,10 @@ int	main(int argc, char **argv, char **envp)
             ft_error_exit("pipe error");
         pid1 = ft_fork();
         if (pid1 == 0)
-            run_child_process(argv, envp, fd[0]);
+            run_child_process(argv, envp, fd);
         pid2 = ft_fork();
         if (pid2 == 0)
-            run_parent_process(argv, envp, fd[1]);
+            run_parent_process(argv, envp, fd);
         close(fd[0]);
         close(fd[1]);
         waitpid(pid1, NULL, 0);
