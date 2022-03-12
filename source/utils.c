@@ -47,43 +47,6 @@ void    ft_error_exit(char *error_message)
     exit(1);
 }
 
-void	ft_putchar_fd(char c, int fd)
-{
-    write (fd, &c, 1);
-}
-
-void	ft_putendl_fd(char *s, int fd)
-{
-    if (!s)
-        return ;
-    while (*s)
-    {
-        ft_putchar_fd(*s, fd);
-        s++;
-    }
-    ft_putchar_fd('\n', fd);
-}
-
-int	ft_open_infile(char *file_name)
-{
-    if (access(file_name, F_OK) < 0)
-    {
-        write(2, "File not found\n", 15);
-        exit(EXIT_FAILURE);
-    }
-    return (open(file_name, O_RDONLY));
-}
-
-int	ft_open_outfile(char *file_name)
-{
-    if (access(file_name, F_OK) < 0)
-    {
-        write(2, "File not found\n", 15);
-        exit(EXIT_FAILURE);
-    }
-    return (open(file_name, O_CREAT | O_WRONLY | O_TRUNC));
-}
-
 int ft_strncmp(const char *s1, const char *s2, size_t n)
 {
     while (n > 0)
