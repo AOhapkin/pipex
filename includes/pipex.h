@@ -19,5 +19,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 void    ft_error_exit(char *error_message);
 pid_t	ft_fork(void);
 int     ft_dup2(int old, int new);
+char	*ft_get_file_path(char *filename, int filecheck, char **envp);
 
 #endif
