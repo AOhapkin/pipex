@@ -31,7 +31,6 @@ char	*ft_get_file_path(char *filename, int filecheck, char **envp)
     while (ft_strncmp(envp[i], "PWD=", 4) && envp[i] != NULL)
         i++;
     path_part = envp[i] + 4;
-    i = 0;
     temp = ft_strjoin(path_part, "/");
     full_path = ft_strjoin(temp, filename);
     free(temp);

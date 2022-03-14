@@ -31,7 +31,7 @@ char    *ft_get_command(char *command, char **envp)
 
 void    run_child_process(char **argv, char **envp, int *fd)
 {
-    int		infile;
+    int		infile_fd;
     char	**args_vector;
     char	*file_path;
 
@@ -39,30 +39,30 @@ void    run_child_process(char **argv, char **envp, int *fd)
     close(fd[0]);
     close(fd[1]);
     file_path = ft_get_file_path(argv[1], 1, envp);
-    infile = open(file_path, O_RDONLY);
+    infile_fd = open(file_path, O_RDONLY);
     free(file_path);
-    if (infile == -1)
-        ft_error_exit("can't open infile");
-    ft_dup2(infile, 0);
+    if (infile_fd == -1)
+        ft_error_exit("Infile error");
+    ft_dup2(infile_fd, 0);
     args_vector = ft_split(argv[2], ' ');
     execve(ft_get_command(args_vector[0], envp), args_vector, envp);
 }
 
 void    run_parent_process(char **argv, char **envp, int *fd)
 {
-    int		outfile;
+    int		outfile_fd;
     char	**command_args;
     char	*file_path;
 
     file_path = ft_get_file_path(argv[4], 0, envp);
-    outfile = open(file_path, O_CREAT | O_RDWR | O_TRUNC, 0644);
+    outfile_fd = open(file_path, O_CREAT | O_RDWR | O_TRUNC, 0644);
     free(file_path);
-    if (outfile == -1)
-        ft_error_exit("can't open or create outfile");
+    if (outfile_fd == -1)
+        ft_error_exit("can't open or create outfile_fd");
     ft_dup2(fd[0], 0);
     close(fd[0]);
     close(fd[1]);
-    ft_dup2(outfile, 1);
+    ft_dup2(outfile_fd, 1);
     command_args = ft_split(argv[3], ' ');
     execve(ft_get_command(command_args[0], envp), command_args, envp);
 }
@@ -73,7 +73,7 @@ int	main(int argc, char **argv, char **envp)
     pid_t   pid1;
     pid_t   pid2;
 
-	if (argc == 5)
+    if (argc == 5)
 	{
         if (pipe(fd) == -1)
             ft_error_exit("pipe error");
@@ -88,6 +88,7 @@ int	main(int argc, char **argv, char **envp)
         waitpid(pid1, NULL, 0);
         waitpid(pid2, NULL, 0);
     }
-    ft_error_exit("Error! Must be 4 arguments");
+    else
+        ft_error_exit("Error! Must be 4 arguments");
 	return (0);
 }

@@ -6,7 +6,7 @@ INCLUDES = ./includes
 
 # files
 SRCS = 	source/pipex.c\
-            source/ft_split.c\
+            source/str_utils.c\
             source/utils.c
 
 HEADER = $(INCLUDES)/pipex.h
