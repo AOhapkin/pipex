@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmyriah <gmyriah@student.21-school.ru>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/15 10:01:50 by gmyriah           #+#    #+#             */
+/*   Updated: 2022/03/15 10:01:53 by gmyriah          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 # define PIPEX_H
 
@@ -8,11 +20,11 @@
 # include <stdlib.h>
 
 char	**ft_split(char *string, char divider);
-int     ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
-void    ft_error_exit(char *error_message);
+void	ft_error_exit(char *error_message);
 pid_t	ft_fork(void);
-int     ft_dup2(int old, int new);
+int		ft_dup2(int old, int new);
 char	*ft_get_file_path(char *filename, int filecheck, char **envp);
 
 #endif
